@@ -4,11 +4,10 @@ var myConsole = new nodeConsole.Console(process.stdout, process.stderr);
 var testButton = document.getElementById("test");
 var otherTestButton = document.getElementById("otherTest");
 
-//old one: AIzaSyASmKIMfbQsbislLQG99ezyVigVCYYLBjo
-var youtubeAPIKey = 'AIzaSyCRKMtdFUeAcyPvgh9c-yO36NvQ5jnvZfg'; 
+var youtubeAPIKey = 'AIzaSyCRKMtdFUeAcyPvgh9c-yO36NvQ5jnvZfg';
 var playlistId = 'PLp5Ie3eol3uMlez6wv9LGx7oDU2OnVykL';
 var youtubeGET = 'https://www.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=UC_x5XG1OV2P6uZZ5FSM9Ttw&key=[YOUR_API_KEY]';
-var channelId = 'UCDK5FCSaeUHr_AwtHD0tN_w';
+var channelId = '';
 var passedData;
 
 
@@ -16,22 +15,33 @@ var input;
 testButton.onclick = function() {
   input = document.getElementById("channel_id").value;
   myConsole.log("Channel ID: " + input);
-  //$(".collection").empty();
   channelId = input;
 
-  playlistLoad(input);
+  findIdFromUsername(input);
 };
-function playlistLoad(id) {
+function findIdFromUsername(username) {
   $(function() {
-  	$.getJSON('https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id='+channelId+'&key='+youtubeAPIKey, function(data) {
+  $.getJSON('https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername='+username+'&key='+youtubeAPIKey, function(data) {
+    passedData = data;
+    myConsole.log(JSON.stringify(data));
+
+    channelId = data.items[0].id.toString();
+    myConsole.log(channelId);
+    playlistLoad(channelId);
+  });
+});
+}
+function playlistLoad(id) {
+  channelId = id;
+  $(function() {
+    $.getJSON('https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id='+channelId+'&key='+youtubeAPIKey, function(data) {
       passedData = data;
-  		myConsole.log(JSON.stringify(data));
-  		//$(".Results").append('<li>'+data.items[0].contentDetails.relatedPlaylists.uploads+'</li>');
+      myConsole.log(JSON.stringify(data));
 
-  		playlistId = data.items[0].contentDetails.relatedPlaylists.uploads;
-  	});
+      playlistId = data.items[0].contentDetails.relatedPlaylists.uploads;
+    });
 
-  	getPlaylists(playlistId);
+    getPlaylists(playlistId);
   });
 };
 
@@ -43,7 +53,6 @@ var ytPlaylistName;
 function getPlaylists(id) {
   $.getJSON('https://www.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&channelId='+channelId+'&maxResults=25&key='+youtubeAPIKey, function(data) {
     myConsole.log(JSON.stringify(data));
-    //myConsole.log(data.pageInfo.totalResults);
     $(".playlists").empty();
     for (i=0; i < data.pageInfo.totalResults; i++) {
         ytTitles = data.items[i].snippet.title;
@@ -64,27 +73,36 @@ function getPlaylists(id) {
 otherTestButton.onclick = function() {
   input = document.getElementById("other_channel_id").value;
   myConsole.log("Channel ID: " + input);
-  //$(".collection").empty();
   channelId = input;
-  otherPlaylistLoad(input);
+  findOtherIdFromUsername(input);
 };
+function findOtherIdFromUsername(username) {
+  $(function() {
+  $.getJSON('https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername='+username+'&key='+youtubeAPIKey, function(data) {
+    passedData = data;
+    myConsole.log(JSON.stringify(data));
+
+    channelId = data.items[0].id.toString();
+    myConsole.log(channelId);
+    otherPlaylistLoad(channelId);
+  });
+});
+}
 function otherPlaylistLoad(id) {
   $(function() {
-  	$.getJSON('https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id='+channelId+'&key='+youtubeAPIKey, function(data) {
+    $.getJSON('https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id='+channelId+'&key='+youtubeAPIKey, function(data) {
       passedData = data;
-  		myConsole.log(JSON.stringify(data));
-  		//$(".Results").append('<li>'+data.items[0].contentDetails.relatedPlaylists.uploads+'</li>');
+      myConsole.log(JSON.stringify(data));
 
-  		playlistId = data.items[0].contentDetails.relatedPlaylists.uploads;
-  	});
+      playlistId = data.items[0].contentDetails.relatedPlaylists.uploads;
+    });
 
-  	getOtherPlaylists(playlistId);
+    getOtherPlaylists(playlistId);
   });
 };
 function getOtherPlaylists(id) {
   $.getJSON('https://www.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&channelId='+channelId+'&maxResults=25&key='+youtubeAPIKey, function(data) {
     myConsole.log(JSON.stringify(data));
-    //myConsole.log(data.pageInfo.totalResults);
     $(".otherPlaylists").empty();
     for (i=0; i < data.pageInfo.totalResults; i++) {
         ytTitles = data.items[i].snippet.title;

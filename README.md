@@ -1,11 +1,11 @@
 # Electron-YT-API-App
 
-An Electron app that connects to the YouTube API
+An Electron app that connects to the YouTube API. It can simultaneously display two YouTube channels playlist, and displays the contents if you select one of the playlists.
 
 
 # To use
 
-Navigate to where you want the download to go, then type
+Navigate to where you want the download to go from the command line, then enter
 ```bash
 git clone https://github.com/ChadLutz/Electron-YT-API-App
 #Navigate to the download

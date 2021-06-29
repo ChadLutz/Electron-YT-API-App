@@ -5,9 +5,9 @@ var testButton = document.getElementById("test");
 var otherTestButton = document.getElementById("otherTest");
 
 var youtubeAPIKey = 'AIzaSyCRKMtdFUeAcyPvgh9c-yO36NvQ5jnvZfg';
-var playlistId = 'PLp5Ie3eol3uMlez6wv9LGx7oDU2OnVykL';
 var youtubeGET = 'https://www.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=UC_x5XG1OV2P6uZZ5FSM9Ttw&key=[YOUR_API_KEY]';
 var channelId = '';
+var playlistId = '';
 var passedData;
 
 

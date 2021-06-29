@@ -1,0 +1,14 @@
+{
+  "name": "Swapper",
+  "version": "1.0.0",
+  "description": "A YT Channel playlist comparison",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Chad Lutz",
+  "license": "",
+  "devDependencies": {
+    "electron": "^5.0.0"
+  }
+}

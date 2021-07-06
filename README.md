@@ -3,7 +3,7 @@
 An Electron app that connects to the YouTube API. It can simultaneously display two YouTube channels playlist, and displays the contents if you select one of the playlists.
 
 
-# To use
+# Installation and Running The Application
 
 Navigate to where you want the download to go from the command line, then enter (requires Git & Node.JS):
 ```bash

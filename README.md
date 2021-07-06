@@ -5,7 +5,7 @@ An Electron app that connects to the YouTube API. It can simultaneously display 
 
 # To use
 
-Navigate to where you want the download to go from the command line, then enter (requires Node.JS)
+Navigate to where you want the download to go from the command line, then enter (requires Node.JS):
 ```bash
 git clone https://github.com/ChadLutz/Electron-YT-API-App
 #Navigate to the download
